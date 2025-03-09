@@ -1,0 +1,21 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+     <h3>{{ title }}</h3>
+  <div>
+      {{ form.media }}
+    {{ info.article|safe }}
+
+  </div>
+<p></p>
+     <p align="center"><input type="button" onclick="history.back();" value="Вернуться на предыдущию страницу"/></p>
+</article>
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'main/enter.html' %}
+
+{% endblock %}

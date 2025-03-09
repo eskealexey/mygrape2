@@ -1,0 +1,18 @@
+
+
+<aside class="left">
+{% if request.user.is_authenticated %}
+    <p><span style="color: #3b635d; font-size:12px ">Добро пожаловать,</span><br>
+    {% if request.user.first_name == '' %}
+        {{ request.user.username}}
+    {% else %}
+        {{ request.user.first_name }}
+    {% endif %}
+    </p>
+    <p><a href="{% url 'logout' %}"><button class="btn btn-secondary btn-sm">Выход</button></a></p>
+{% else %}
+    <p><a href="{% url 'register' %}">Регистрация</a></p>
+    <p><a href="{% url 'login' %}"><button class="btn btn-secondary btn-sm">Вход</button></a></p>
+{% endif %}
+</aside>
+

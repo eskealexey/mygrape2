@@ -1,0 +1,46 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+    <div class="label">
+     {{ title }}
+    </div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+    <thead>
+    <tr>
+        <th>Название сорта</th>
+        <th>Назначение</th>
+        <th>Цвет ягоды</th>
+        <th>Морозостойкость</th>
+        <th>Тип цветка</th>
+        <th>Срок</th>
+        <th>Фото</th>
+    </tr>
+    </thead>
+    {% for grape in data %}
+    <tr align="center">
+        <td><a href="/sorts/{{ grape.pk }}"><h4>{{ grape.name }}</h4></a>
+           Синонимы: <span style="color:green; font-size:12px;">{{ grape.alias }}</span></td>
+        <td>{{ grape.get_naznacn_display}}</td>
+        <td>{{ grape.br_color}}</td>
+        <td>{{ grape.frozen_re }}</td>
+        <td>{{ grape.get_type_fl_display }}</td>
+        <td>{{ grape.srok }}</td>
+        <td><img src="/files/{{ grape.img_url }}" width="100px" ></td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+    <p></p>
+     <p align="center"><input type="button" onclick="history.back();" value="Вернуться на предыдущию страницу"/></p>
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'main/enter.html' %}
+{% endblock %}

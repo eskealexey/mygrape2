@@ -1,0 +1,18 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">{{ title }} ({{ user.first_name }} {{ user.last_name}})</h5>
+        </div>
+        <div class="card-body">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                 <input type="submit" value="Update Profile" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

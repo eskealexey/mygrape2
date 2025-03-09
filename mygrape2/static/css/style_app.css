@@ -1,0 +1,186 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 9 сент. 2024 г., 08:48:21
+    Author     : 044EskeAA@0044.pfr.ru
+*/
+* {
+    margin: 0;
+}
+
+body {
+  /*  width: 100%;
+    margin: 5px auto;*/
+    background-color: #1a625b82;;
+}
+
+#header {
+    background-color: #fff;
+    font-size: medium;
+    color: #0dcaf0;
+}
+
+#navigator_top {
+    background-color: #cccccc;
+    color: #0dcaf0;
+}
+
+#content {
+    background-color: gainsboro;
+    padding: 0;
+    display: flex;
+}
+
+#left {
+    /*background-color: #e5c7ca;*/
+    display: inline-block;
+    width: 15%;
+    float: left;
+}
+
+#main {
+    /*background-color: #0dcaf0;*/
+
+    width: 100%;
+    padding:0;
+
+}
+
+article {
+    background-color: #fff;
+    padding: 10px;
+    margin: 0;
+}
+
+
+#podval {
+    text-align: center;
+    width: 100%;
+    margin: 20px auto;
+    background-color: #cccccc;
+}
+
+nav ul {
+    display: flex;
+  list-style: none; /*убираем маркеры списка*/
+  margin: 0; /*убираем верхнее и нижнее поле, равное 1em*/
+  padding-left: 0; /*убираем левый отступ, равный 40px*/
+}
+nav li {
+    display: inline-block;
+    margin-right: 20px;
+    padding: 10px 0;
+}
+
+#home {
+    display: inline-block;
+    width: 20%;
+    float:left;
+}
+
+#menu {
+    display: flex;
+    width: auto;
+    float: right;
+
+}
+
+a {text-decoration: none; /*убираем подчеркивание текста ссылок*/}
+
+.logo {
+    color: black;
+    font-size: 50px;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+}
+
+tr td {
+    padding: 10px;
+    border: 2px solid black;
+}
+
+thead th {
+    border: 2px solid black;
+    padding: 10px;
+    background-color: darkgray;
+    color: white;
+    font-style: oblique;
+    }
+
+.sortable {
+    width: 50%;
+    display: inline-block;
+}
+
+.view_foto {
+    display: inline-block;
+    float: right;
+
+}
+
+.pagination {
+    display: inline-block;
+    font-size: 14px;
+}
+
+.pagination1 {
+    display: inline-block;
+    float: right;
+    font-size: 12px;
+}
+
+.found {
+    float: right;
+    padding: 2px;
+    font-size: 12pt;
+    font-style:oblique;
+    width: auto;
+    display: inline-block;
+}
+
+.label {
+    padding: 2px;
+    font-size: 26pt;
+    font-style:oblique;
+    color: green;
+    /*width: auto;*/
+    display: inline-block;
+}
+
+#table_place {
+    border: 2px solid green;
+}
+
+div#tab_left {
+    float: left;
+    display: inline-block;
+    border: 1px solid black;
+    width: 33%;
+    margin: 1px;
+    padding: 1px;
+    background-color: #ccffcc;
+}
+div#tab_midle {
+    display: inline-block;
+    border: 1px solid red;
+    width: 33%;
+    margin: 1px 1px 1px 6px;
+    padding: 1px;
+    background-color: gold;
+}
+div#tab_right {
+    float: right;
+    display: inline-block;
+    border: 1px solid green;
+    width: 33%;
+    margin: 1px;
+    padding: 1px;
+    background-color: #E6855F;
+}
