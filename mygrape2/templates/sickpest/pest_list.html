@@ -1,0 +1,18 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+
+    {% for p in data %}
+    <a href="{{ p.pk }}">{{ p.name }}</a> - <span style="color:red; font-size:12px; font-style:italic;">{{ p.get_type_s_display}}</span><br>
+    {% endfor %}
+
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'app/enter.html' %}
+{% endblock %}

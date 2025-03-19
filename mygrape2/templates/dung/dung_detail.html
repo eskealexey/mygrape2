@@ -1,0 +1,21 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+
+    <h3>{{ data.name }}</h3>
+    <p>
+    Синоним: {{ data.alias }}
+    </p>
+    Описание:
+    <p>{{ data.description|safe }}</p>
+
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'app/enter.html' %}
+{% endblock %}

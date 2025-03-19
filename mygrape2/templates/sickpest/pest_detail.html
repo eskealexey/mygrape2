@@ -1,0 +1,23 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main" xmlns="http://www.w3.org/1999/html">
+
+  <h2>{{sickpest.name}}</h2>
+  <div></div>
+  {{sickpest.description|safe}} </div>
+
+
+  {% for img in sickpest_image %}
+  <img src="/files/{{img.image}}" width="500px" alt="{{img.image}}">
+  {% endfor %}
+
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'app/enter.html' %}
+{% endblock %}

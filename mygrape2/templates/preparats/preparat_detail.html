@@ -1,0 +1,62 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+
+    <h3>{{ data.name }}</h3>
+    <table style="width: 50%; border: 0;">
+        <tr>
+            <td width="25%">
+                От болезней (вредителей):
+            </td>
+            <td width="75%">
+                {% for sick in data.sick_id.all %}
+                    <span style="color: red; font-size: 14px; font-style: italic; font-weight: bold;">{{ sick }}</span>;
+                {% endfor %}
+            </td>
+        <tr>
+            <td>
+                Действие:
+            </td>
+            <td>
+                {{ data.get_action_display }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Срок ожидания, дней:
+            </td>
+            <td>
+                {{ data.srok_og }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Срок защиты, дней:
+            </td>
+            <td>
+                {{ data.srok_zaq }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Тип препарата:
+            </td>
+            <td>
+                {{ data.get_type_preparat_display }}
+            </td>
+        </tr>
+
+    </table>
+    Описание:<br>
+    <p>{{ data.description|safe }}</p>
+
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'app/enter.html' %}
+{% endblock %}

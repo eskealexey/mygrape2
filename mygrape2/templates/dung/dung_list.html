@@ -1,0 +1,19 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+
+    {% for item in data %}
+        <a href="{{ item.pk }}" >{{ item.name }}</a>
+<!--        (<span style="color:green; font-size:12px; font-style:italic;">{{ item.get_type_preparat_display }}</span>)-->
+    <br>
+    {% endfor %}
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'app/enter.html' %}
+{% endblock %}
