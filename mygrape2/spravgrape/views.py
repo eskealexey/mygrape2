@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import SortGrape, InfoGrape
 
@@ -46,20 +46,22 @@ def info_detail(request, info_id):
     }
     return render(request, 'spravgrape/info_detail.html', context=context)
 
+
 def found(request):
     context = {
         'title': 'Поиск по названию',
     }
+
     if request.method == "GET":
-        str_ = request.GET.get('find')
-        if str_ == '':
-            return render(request, 'spravgrape/found.html',context=context)
-        else:
-            # data = SortGrape.objects.filter(name__contains=str_).all()
-            data = SortGrape.objects.filter(name__icontains =str_).all()
+        str_ = request.GET.get('find', '').strip()  # Получаем значение и убираем пробелы
+        if str_:
+            # Ищем по названию
+            data = SortGrape.objects.filter(name__icontains=str_).all()
             if not data:
+                # Если ничего не найдено, ищем по алиасу
                 data = SortGrape.objects.filter(alias__icontains=str_).all()
-            context = {
-                'data': data,
-            }
-    return render(request, 'spravgrape/found.html',context=context)
+            context['data'] = data  # Добавляем данные в контекст
+        else:
+            context['error'] = 'Введите текст для поиска.'  # Сообщение об ошибке, если строка пустая
+
+    return render(request, 'spravgrape/found.html', context=context)

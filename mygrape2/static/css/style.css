@@ -72,3 +72,26 @@ figure {
     padding: 0; /* Убираем внутренние отступы */
     display: inline-block; /* Для корректного выравнивания */
 }
+
+/* Адаптивные изображения */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Адаптивная таблица */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Адаптивная пагинация */
+.pagination {
+    flex-wrap: wrap;
+}
+
+/* Адаптивная форма */
+.form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}

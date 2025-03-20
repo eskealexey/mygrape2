@@ -2,104 +2,107 @@
 
 {% block content %}
 <article class="main">
-     <h3>Сорт {{ title }}</h3>
-<div class="sortable">
-    <table class="table table-bordered table-striped">
-        <tr>
-            <td width="40%">Синонимы:</td>
-            <td width="60%"> {{ sort.alias }}</td>
-        </tr>
-         <tr>
-            <td>Назначение:</td>
-            <td>{{ sort.get_naznacn_display }}</td>
-        </tr>
-         <tr>
-            <td>Авторы:</td>
-            <td>{{ sort.authors}}</td>
-        </tr>
-         <tr>
-            <td>Родители:</td>
-            <td>{{ sort.parents }}</td>
-        </tr>
-         <tr>
-            <td>Сортность:</td>
-            <td>{{ sort.get_sortnost_display }}</td>
-        </tr>
-         <tr>
-            <td>Форма грозди:</td>
-            <td>{{ sort.gr_forma }}</td>
-        </tr>
-         <tr>
-            <td>Плотность грозди:</td>
-            <td>{{ sort.gr_plotnost }}</td>
-        </tr>
-         <tr>
-            <td>Вес грозди, г:</td>
-            <td>{{ sort.gr_ves }}</td>
-        </tr>
-         <tr>
-            <td>Цвет ягоды:</td>
-            <td>{{ sort.br_color }}</td>
-        </tr>
-         <tr>
-            <td>Вкус ягоды:</td>
-            <td>{{ sort.get_br_vkus_display }}</td>
-        </tr>
-        <tr>
-            <td>Сахар (BRIX):</td>
-            <td>{{ sort.brix }}</td>
-        </tr>
-         <tr>
-            <td>Размер ягоды:</td>
-            <td>{{ sort.br_size}}</td>
-        </tr>
-        <tr>
-            <td>Вес ягоды, г:</td>
-            <td>{{ sort.br_ves}}</td>
-        </tr>
-         <tr>
+    <h3>Сорт {{ title }}</h3>
+    <div class="sortable">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td>Синонимы:</td>
+                        <td>{{ sort.alias }}</td>
+                    </tr>
+                    <tr>
+                        <td>Назначение:</td>
+                        <td>{{ sort.get_naznacn_display }}</td>
+                    </tr>
+                    <tr>
+                        <td>Авторы:</td>
+                        <td>{{ sort.authors }}</td>
+                    </tr>
+                    <tr>
+                        <td>Родители:</td>
+                        <td>{{ sort.parents }}</td>
+                    </tr>
+                    <tr>
+                        <td>Сортность:</td>
+                        <td>{{ sort.get_sortnost_display }}</td>
+                    </tr>
+                    <tr>
+                        <td>Форма грозди:</td>
+                        <td>{{ sort.gr_forma }}</td>
+                    </tr>
+                    <tr>
+                        <td>Плотность грозди:</td>
+                        <td>{{ sort.gr_plotnost }}</td>
+                    </tr>
+                    <tr>
+                        <td>Вес грозди, г:</td>
+                        <td>{{ sort.gr_ves }}</td>
+                    </tr>
+                    <tr>
+                        <td>Цвет ягоды:</td>
+                        <td>{{ sort.br_color }}</td>
+                    </tr>
+                    <tr>
+                        <td>Вкус ягоды:</td>
+                        <td>{{ sort.get_br_vkus_display }}</td>
+                    </tr>
+                    <tr>
+                        <td>Сахар (BRIX):</td>
+                        <td>{{ sort.brix }}</td>
+                    </tr>
+                    <tr>
+                        <td>Размер ягоды:</td>
+                        <td>{{ sort.br_size }}</td>
+                    </tr>
+                    <tr>
+                        <td>Вес ягоды, г:</td>
+                        <td>{{ sort.br_ves }}</td>
+                    </tr>
+                    <tr>
+                        <td>Морозостойкость:</td>
+                        <td>{{ sort.frozen_re }}</td>
+                    </tr>
+                    <tr>
+                        <td>Тип цветка:</td>
+                        <td>{{ sort.get_type_fl_display }}</td>
+                    </tr>
+                    <tr>
+                        <td>Сила роста:</td>
+                        <td>{{ sort.rost }}</td>
+                    </tr>
+                    <tr>
+                        <td>Рекомендуемая обрезка:</td>
+                        <td>{{ sort.obrezka }}</td>
+                    </tr>
+                    <tr>
+                        <td>Срок (в днях):</td>
+                        <td>{{ sort.srok_day }}</td>
+                    </tr>
+                    <tr>
+                        <td>Срок:</td>
+                        <td>{{ sort.srok }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-            <td>Морозостойкость:</td>
-            <td>{{ sort.frozen_re }}</td>
-        </tr>
-         <tr>
-            <td>Тип цветка:</td>
-            <td>{{ sort.get_type_fl_display }}</td>
-        </tr>
-         <tr>
-            <td>Сила роста:</td>
-            <td>{{ sort.rost }}</td>
-        </tr>
-         <tr>
-            <td>Рекомендуемая обрезка:</td>
-            <td>{{ sort.obrezka }}</td>
-        </tr>
-        <tr>
-            <td>Срок (в днях):</td>
-            <td>{{ sort.srok_day}}</td>
-        </tr>
-        <tr>
-            <td>Срок:</td>
-            <td>{{ sort.srok }}</td>
-        </tr>
-    </table>
-</div>
-    <div class="view_foto">
-        <img src="/files/{{ sort.img_url}}" width="450px" alt="{{ sort.img_url}}">
+    <div class="view_foto text-center mt-3">
+        <img src="/files/{{ sort.img_url }}" class="img-fluid" alt="{{ sort.img_url }}">
         <p>
             {% for dop in info %}
                 <a href="/sorts/dop/{{ dop.pk }}">{{ dop }}</a><br>
             {% endfor %}
         </p>
     </div>
-<p></p>
-     <p align="center"><input type="button" onclick="history.back();" value="Вернуться на предыдущию страницу"/></p>
+
+    <div class="text-center mt-3">
+        <input type="button" onclick="history.back();" value="Вернуться на предыдущую страницу" class="btn btn-primary"/>
+    </div>
 </article>
 {% endblock %}
 
-
-
 {% block left %}
- {% include 'main/enter.html' %}
-
+{% include 'main/enter.html' %}
 {% endblock %}

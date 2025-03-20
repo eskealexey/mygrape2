@@ -10,24 +10,28 @@ from .forms import ProcessingAddForm, ProcessingEditForm
 from .forms import LocationAddForm, NoteAddForm, LocationEditForm, NoteEditForm, LocationDeleteForm
 from .models import Location, Notes, GreenOper, Feeding, Processing
 
+from typing import Tuple, Optional
 
-def get_age(date_start, date_end=None):
+
+def get_age(date_start: datetime.date, date_end: Optional[datetime.date] = None) -> Tuple[int, int, int]:
     """
     Get age from date_start to date_end
-    :param date_start:
-    :param date_end:
-    :return: tuple (years, months, days)
+    :param date_start: начальная дата
+    :param date_end: конечная дата (по умолчанию - текущая дата)
+    :return: кортеж (годы, месяцы, дни)
     """
     if date_end is None:
         date_end = datetime.date.today()
-    else:
-        date_end = date_end
-    age = date_end - date_start
-    years = age.days // 365
-    tmp = int(age.days) - years * 365
-    months = tmp // 30
-    days = tmp - months * 30
-    return years, months,days
+    years = date_end.year - date_start.year
+    months = date_end.month - date_start.month
+    days = date_end.day - date_start.day
+    if days < 0:
+        months -= 1
+        days += (date_end.replace(day=1) - datetime.timedelta(days=1)).day
+    if months < 0:
+        years -= 1
+        months += 12
+    return years, months, days
 
 
 def format_date(date):
@@ -42,40 +46,15 @@ def index_jornal(request):
     """
     Вывод списка посадочных мест
     """
-    data = Location.objects.all().filter(userid=request.user.pk, status=0)
-    result= []
-    num = 1
-    for item in data:
-        res = '<tr>'
-        res += f'<td>{num} </td>'
-        res += f'<td><a href="/jornal/{item.id}/"><span style="color:blue; font-size:24px; font-weight:bold; font-style:italic;">{item.name}</span></a>'
-        res += f'<a href="edit/{item.id}/"><img src="/static/img/edit.png" width="20px" height="auto" title="Редактировать"></a><br>'
-        sort = item.sort_id.all()
-        res += f'<span style="color:red; font-size:12px;">Сорта: </span>'
-        if sort:
-            for i in sort:
-                res += f'<a href="/sorts/{i.id}/"><span style="color:green; font-size:12px;">{i.name}; </span></a>'
-        else:
-            res += f'<span style="color:green; font-size:12px;">{item.sort} </span>'
-        res += f'</td>'
-
-        age = get_age(item.date_posadki)
-        res += f'<td>{item.date_posadki.strftime("%d %b  %Y")} г.<br>'
-        res += f'<span style="color:grey; font-size:10px;">Возраст: {age[0]} г. {age[1]} мес. {age[2]} дн.</span></td>'
-        res += f'<td><img src="/files/{item.mesto_graf}" width="100px" height="auto" alt=" "></td>'
-        res += f'<td>{item.mesto}</td>'
-        res += f'<td><i><a href="/jornal/green/{item.id}">Зеленые операции</a><br>'
-        res += f'<a href="/jornal/feeding/{item.id}">Подкормки</a><br>'
-        res += f'<a href="/jornal/processing/{item.id}">Обработки</a></i></td>'
-        res += f'</tr>'
-        result.append(res)
-        num += 1
-    context = {
-        'title': 'Журнал работы',
-        'data': data,
-        'result': result,
-    }
-    return render(request, 'jornal/index_jornal.html', context=context)
+    try:
+        data = Location.objects.filter(userid=request.user.pk, status=0).prefetch_related('sort_id')
+        context = {
+            'title': 'Журнал работы',
+            'data': data,
+        }
+        return render(request, 'jornal/index_jornal.html', context=context)
+    except Exception as e:
+        return f"Произошла ошибка: {str(e)}"
 
 
 def add_place(request):
@@ -94,7 +73,6 @@ def add_place(request):
             print(nameuser)
             form.save()
             Location.objects.filter(name=name).update(userid=request.user.pk)
-
 
             return redirect('index_jornal')
     else:

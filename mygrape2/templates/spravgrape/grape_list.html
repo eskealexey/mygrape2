@@ -2,89 +2,91 @@
 
 {% block content %}
 <article class="main">
-    <div class="label">
-     {{ title }}
+<div class="row align-items-center">
+    <div class="col-12 col-md-8 label mb-2 mb-md-0">
+        {{ title }}
     </div>
-    <div class="found">
-        <form action="found" method="get">
-            <button type="submit" class="btn btn-secondary btn-sm">Поиск</button>
-            <input class="form-control-sm" type="text" maxlength="20" name="find">
-    </form>
+    <div class="col-12 col-md-4 d-flex justify-content-md-end">
+        <form action="found" method="get" class="form-inline">
+            <input class="form-control form-control-sm me-2" type="text" maxlength="20" name="find" placeholder="Поиск">
+            <button type="submit" class="btn btn-secondary btn-sm">Найти</button>
+        </form>
+    </div>
+</div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Название сорта</th>
+                    <th>Назначение</th>
+                    <th>Цвет ягоды</th>
+                    <th>Морозостойкость</th>
+                    <th>Тип цветка</th>
+                    <th>Срок</th>
+                    <th>Фото</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grape in page_obj %}
+                <tr align="center">
+                    <td>
+                        <a href="{% url 'sort_detail' grape.pk %}"><h4>{{ grape.name }}</h4></a>
+                        Синонимы: <span style="color:green; font-size:12px;">{{ grape.alias }}</span>
+                    </td>
+                    <td>{{ grape.get_naznacn_display }}</td>
+                    <td>{{ grape.br_color }}</td>
+                    <td>{{ grape.frozen_re }}</td>
+                    <td>{{ grape.get_type_fl_display }}</td>
+                    <td>{{ grape.srok }}</td>
+                    <td><img src="/files/{{ grape.img_url }}" class="img-fluid" style="max-height: 100px;"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&pag={{ pag }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                <a class="page-link" href="?page={{ i }}&pag={{ pag }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}&pag={{ pag }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="pagination1">
+        <form method="POST" class="form-inline">
+            {% csrf_token %}
+            <small class="text-muted mr-2">Кол-во строк на стр.</small>
+            <select name="select" class="form-control form-control-sm mr-2">
+                {% for pg in select_chouis %}
+                    <option value="{{ pg }}" {% if pg == pag %}selected{% endif %}>{{ pg }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-sm btn-secondary" type="submit">OK</button>
+        </form>
     </div>
 
 
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>Название сорта</th>
-        <th>Назначение</th>
-        <th>Цвет ягоды</th>
-        <th>Морозостойкость</th>
-        <th>Тип цветка</th>
-        <th>Срок</th>
-        <th>Фото</th>
-    </tr>
-    </thead>
-    {% for grape in page_obj %}
-    <tr align="center">
-        <td><a href="/sorts/{{ grape.pk }}"><h4>{{ grape.name }}</h4></a>
-           Синонимы: <span style="color:green; font-size:12px;">{{ grape.alias }}</span></td>
-        <td>{{ grape.get_naznacn_display}}</td>
-        <td>{{ grape.br_color}}</td>
-        <td>{{ grape.frozen_re }}</td>
-        <td>{{ grape.get_type_fl_display }}</td>
-        <td>{{ grape.srok }}</td>
-        <td><img src="/files/{{ grape.img_url }}" width="auto" height="100px"></td>
-    </tr>
-
-    {% endfor %}
-
-</table>
-    <div class="pagination">
-    {% if page_obj.has_other_pages %}
-        {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}&pag={{ pag }}">&lt;&lt;</a>
-        {% endif %}
-
-        {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.number == i %}
-                <b>{{ i }}</b>
-            {% else %}
-                <a href="?page={{ i }}&pag={{ pag }}">{{ i }}</a>
-            {% endif%}
-        {% endfor %}
-
-        {% if page_obj.has_next %}
-           <a href="?page={{ page_obj.next_page_number }}&pag={{ pag }}">&gt;&gt;</a>
-        {% endif %}
-    {% endif %}
-    </div>
-        <div class="pagination1">
-            <form method="POST">
-                {% csrf_token %}
-            <small class="text-muted">Кол-во строк на стр.</small>
-                <select name="select">
-                    {% for pg in select_chouis %}
-                        {% if pg == pag  %}
-                            <option value={{ pag }} selected>{{ p }}</option>
-                        {% else %}
-                            <option value={{ pg }} >{{ pg }}</option>
-                        {% endif %}
-                    {% endfor %}
-
-                  </select>
-                <button class="button" type="submit">ok</button>
-            </form>
-        </div>
-    </div>
-<p></p>
-     <p align="center"><input type="button" onclick="history.back();" value="Вернуться на предыдущию страницу"/></p>
 </article>
-
 {% endblock %}
-
-
 
 {% block left %}
 {% include 'main/enter.html' %}
