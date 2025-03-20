@@ -1,0 +1,49 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+<section>
+    Массовая операция "ПОДКОРМКИ"
+<hr>
+    <form method="post" action="" enctype="multipart/form-data">
+     {% csrf_token %}
+        <p>
+            <label style="color:green; size:20px; font-style:italic;" for="locationid">Место:</label><br>
+            <select class="form-control" id="locationid" name="locationid" multiple required>
+                {% for place in places %}
+                    <option value="{{place.id}}">{{place.name}}</option>
+                {% endfor %}
+            </select><br>
+         </p>
+        <div>
+            <label style="color:green; size:20px; font-style:italic;" for="dung_id">Подкормка:</label><br>
+            Выбрать из списка
+            <select id="dung_id" name="dung_id" multiple>
+                {% for dung in dungs %}
+                <option value="{{dung.id}}">{{dung.name}}</option>
+                {% endfor %}
+            </select>
+            и/или добавить вручную:
+            <input type="text" id="dung_" name="dung_">
+        </div>
+         <p>
+            <label style="color:green; size:20px; font-style:italic;" for="date_add">Дата</label><br>
+            <input class="form-control" type="date" id="date_add" name="date_add" required>
+         </p>
+         <p>
+            <label style="color:green; size:20px; font-style:italic;" for="description">Описание:</label><br>
+             <textarea class="form-control" id="description" name="description"  rows="5" cols="50" required></textarea>
+         </p>
+
+         <p>
+           <button type="submit">Добавить</button>
+         </p>
+    </form>
+
+</section>
+</article>
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

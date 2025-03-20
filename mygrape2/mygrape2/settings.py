@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'preparats',
     'dung',
     'sickpest',
+    'jornal',
+    'record',
 ]
 
 MIDDLEWARE = [
@@ -90,7 +92,7 @@ DATABASES = {
         'NAME': 'mygrape' ,
         'USER': 'root',
         'PASSWORD': 'Passw0rD' ,
-        'HOST': '172.19.0.3',
+        'HOST': Host,
     }
 }
 
@@ -188,4 +190,11 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
     "language": "ru_RU",
+}
+TINYMCE_SIMPLE_CONFIG = {
+    'height': 200,
+    'width': 600,
+    'menubar': False,
+    'plugins': 'link',
+    'toolbar': 'undo redo | bold italic | link',
 }

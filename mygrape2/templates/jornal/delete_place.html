@@ -1,0 +1,40 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+    <h3>Редактирование посадочного места</h3>
+    <section>
+   <form method="post" action="" enctype="multipart/form-data">
+     {% csrf_token %}
+<p>
+    {{ form.name.errors }}
+    <label for="{{ form.name.id_for_label }}">Посадочное место: {{ place.name}}</label><br>
+    {{ form.name }}
+</p>
+<p>
+       {{ form.sort_id.errors }}
+       {{ form.sort.errors }}
+
+</p>
+<p>
+    {{ form.date_delete.errors }}
+    <label for="{{ form.date_delete.id_for_label }}">Дата удаления:</label><br>
+            {{ form.date_delete }}
+</p>
+<p>
+    {{ form.prichina.errors }}
+    <label for="{{ form.prichina.id_for_label }}">Причина удаления:</label><br>
+            {{ form.prichina}}
+</p>
+   <p>
+       <button type="submit">Сохранить</button>
+   </p>
+   </form>
+
+</section>
+</article>
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

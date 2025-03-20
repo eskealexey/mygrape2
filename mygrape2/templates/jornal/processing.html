@@ -1,0 +1,91 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+
+<article class="main">
+   <h4>ОБРАБОТКИ</h4>
+   Посадочное место: <a href="/jornal/{{ place.id }}/"><span style="color: green; font-size: 20px;">{{ place.name }}</span></a>
+   <hr>
+    <a href="{% url 'add_processing' place.id %}" style="font-style: italic;">Добавить(+)</a>
+
+<section>
+   <table>
+      <thead>
+         <tr>
+            <th width="15%">Дата</th>
+           <th width="25%">Препарат</th>
+            <th width="50%">Описание</th>
+            <th width="10%"></th>
+         </tr>
+      </thead>
+      <tbody>
+      {% for g in page_obj %}
+         <tr>
+            <td>{{ g.date_add|date:"d M Y" }}</td>
+           <td>
+               {%if g.preparat_id %}
+                   {% for d in g.preparat_id.all %}
+                        {{ d.name}};<br>
+                   {% endfor%}
+               {%endif%}
+               {% if g.preparat %}
+                    {{ g.preparat }}<br>
+               {% endif %}
+           </td>
+            <td>
+               {{ g.description|safe}}
+            </td>
+            <td>
+               <a href="{% url 'edit_processing' g.id %}"><img src="/static/app/img/edit.png" width="20px" height="auto" title="Редактировать"></a>
+               <a href="{% url 'delete_processing' g.id %}"><img src="/static/app/img/Recycle.ico" width="20px" height="auto" title="Удалить"></a>
+            </td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+
+   </table>
+    <div class="pagination">
+    {% if page_obj.has_other_pages %}
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&pag={{ pag }}">&lt;&lt;</a>
+        {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <b>{{ i }}</b>
+            {% else %}
+                <a href="?page={{ i }}&pag={{ pag }}">{{ i }}</a>
+            {% endif%}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+           <a href="?page={{ page_obj.next_page_number }}&pag={{ pag }}">&gt;&gt;</a>
+        {% endif %}
+    {% endif %}
+    </div>
+        <div class="pagination1">
+            <form method="POST">
+                {% csrf_token %}
+            <small class="text-muted">Кол-во строк на стр.</small>
+                <select name="select">
+                    {% for pg in select_chouis %}
+                        {% if pg == pag  %}
+                            <option value={{ pag }} selected>{{ p }}</option>
+                        {% else %}
+                            <option value={{ pg }} >{{ pg }}</option>
+                        {% endif %}
+                    {% endfor %}
+                  </select>
+                <button class="button" type="submit">ok</button>
+            </form>
+        </div>
+    </div>
+
+</section>
+</article>
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

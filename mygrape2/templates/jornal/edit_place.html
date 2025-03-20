@@ -1,0 +1,67 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+    <h3>Редактирование посадочного места</h3>
+    <section>
+   <form method="post" action="" enctype="multipart/form-data">
+     {% csrf_token %}
+<p>
+    {{ form.name.errors }}
+    <label for="{{ form.name.id_for_label }}">Посадочное место:</label><br>
+    {{ form.name }}
+</p>
+<p>
+       {{ form.sort_id.errors }}
+       {{ form.sort.errors }}
+    <table style="width:100%;">
+       <tr>
+           <td width="30%">
+            {{ form.name.errors }}
+            <label for="{{ form.sort_id.id_for_label }}">Сорт (выбрать из списка):</label><br>
+            {{ form.sort_id }}
+            </td>
+            <td width="10%" style="border-width:0; text-align:center; font-size:20px; font-weight:bold;">
+                ИЛИ
+            </td>
+            <td width="30%">
+                 {{ form.name.errors }}
+            <label for="{{ form.sort.id_for_label }}">Сорт (добавить в ручную):</label><br>
+            {{ form.sort }}
+            </td>
+           <td width="30%" style="border-width:0; font-size:12px; color:maroon;">
+               * Сорт можно выбрать из справочника. При нажатой клавиши CTRL, можно выбрать несколько значений.
+               Если в справочнике нет такого сорта, то сорт можно добавить вручную в поле "Сорт (добавить в ручную)".
+               При выбранном из справочника и одновременно заполненым вручную -- приоритет за справочником.
+           </td>
+        </tr>
+    </table>
+</p>
+<p>
+    {{ form.date_posadki.errors }}
+    <label for="{{ form.date_posadki.id_for_label }}">Дата посадки:</label><br>
+            {{ form.date_posadki }}
+</p>
+<p>
+    {{ form.mesto.errors }}
+    <label for="{{ form.mesto.id_for_label }}">Местоположение:</label><br>
+            {{ form.mesto }}
+</p>
+<p>
+    {{ form.mesto_graf.errors }}
+    <label for="{{ form.mesto_graf.id_for_label }}">Местоположение графика):</label><br>
+            {{ form.mesto_graf}}
+</p>
+
+   <p>
+       <button type="submit">Сохранить</button>
+   </p>
+   </form>
+
+</section>
+</article>
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

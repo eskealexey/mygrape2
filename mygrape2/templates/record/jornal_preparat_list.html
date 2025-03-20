@@ -1,0 +1,48 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+    <h2>{{title}}</h2>
+    <a href="/record/preparat/add/{{request.user.username}}"> Добавить новую запись </a>
+    <hr>
+
+    <table>
+        <tr>
+            <th></th>
+            <th>Наименование</th>
+            <th>Количество</th>
+            <th>Действие</th>
+        </tr>
+    {% for jornal in jornal_preparat %}
+        <tr><td><a href="/record/preparat/edit/{{request.user.username}}/{{jornal.id}}"><img src="/static/img/edit.png" width="20px" height="auto" title="Редактировать"></a>
+        <a href="/record/preparat/delete/{{request.user.username}}/{{jornal.id}}"><img src="/static/img/Recycle.ico" width="20px" height="auto" title="Удалить"></a>
+        </td>
+            <td>{{ jornal.name }}</td>
+            <td>{{ jornal.quantity }} грамм (мл)</td>
+            <td>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="jornal_id" value="{{ jornal.id }}">
+                    <label style="color:green; font-size:12px;" for="amount">Кол-во:</label>
+                    <input type="number" min="0" size="5" id="amount" name="amount" required><input type="submit" value="Ок"><br>
+                    <label style="color:green; font-size:12px;">Действие:</label>
+                    <input type="radio" id="add" name="activ" value="+" required>
+                    <label style="color:green; font-size:12px;" for="add">+Добавить</label>
+                    <input type="radio" id="del" name="activ" value="-" required>
+                    <label style="color:green; font-size:12px;" for="del">-Убрать</label><br>
+
+                </form>
+
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+<section>
+   добавление записи в таблицу ОБРАБОТКИ<br>
+    посадочное место: <span style="color:green; font-weight:bold; font-style:italic;">{{ location }}</span>
+<hr>
+<form method="post" action="" enctype="multipart/form-data">
+     {% csrf_token %}
+        {{ form.as_p }}
+     <p>
+       <button type="submit">Добавить</button>
+     </p>
+
+   </form>
+
+</section>
+</article>
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

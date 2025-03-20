@@ -28,7 +28,7 @@
                         </li>
                     {% if request.user.is_authenticated %}
                         <li class="nav-item">
-                          <a class="nav-link" href="#">Журнал работы</a>
+                          <a class="nav-link" href="{% url 'index_jornal' %}">Журнал работы</a>
                         </li>
                     {% endif %}
                         <li class="nav-item dropdown">
@@ -37,9 +37,9 @@
                           </a>
                           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'sort_all' %}">Сорта</a></li>
-                            <li><a class="dropdown-item" href="#">Препараты</a></li>
-                            <li><a class="dropdown-item" href="#">Удобрения</a></li>
-                            <li><a class="dropdown-item" href="#">Болезни и вредители</a></li>
+                            <li><a class="dropdown-item" href="{% url 'preparat_all' %}">Препараты</a></li>
+                            <li><a class="dropdown-item" href="{% url 'dung_all' %}">Удобрения</a></li>
+                            <li><a class="dropdown-item" href="{% url 'sickpest_all' %}">Болезни и вредители</a></li>
                           </ul>
                         </li>
                       </ul>

@@ -1,0 +1,36 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <input type="hidden" id="username" name="username" value="{{ request.user.username }}" required><br>
+
+<p>
+    <label for="preparat_spr">Выбрать из справочника:</label><br>
+    <select id="preparat_spr" name="preparat_spr">
+        <option value="-">---------</option>
+        {% for item in preparats %}
+        <option value="{{ item.name }}">{{ item.name }}</option>
+        {% endfor %}
+    </select>
+или написать вручную
+
+    <input type="text" id="preparat" name="preparat" value="{{ jornal_preparat.name }}" ><br>
+</p>
+<p>
+    <label for="quantity">Количество в граммах (миллилитрах):</label><br>
+    <input type="number" id="quantity" name="quantity" value="{{ jornal_preparat.quantity }}" min="0" required>
+</p>
+    <input type="submit" value="Submit">
+</form>
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

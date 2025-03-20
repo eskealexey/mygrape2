@@ -1,0 +1,38 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<input type="hidden" id="username" name="username" value="{{ request.user.username }}" required><br>
+<p>
+    <label for="dung_spr">Выбрать из справочника:</label><br>
+    <select id="dung_spr" name="dung_spr">
+        <option value="-">---------</option>
+        {% for item in dungs %}
+        <option value="{{ item.name }}">{{ item.name }}</option>
+        {% endfor %}
+    </select>
+или написать вручную
+
+    <input type="text" id="dung" name="dung" value="{{ jornal_dung.name}}"><br>
+</p>
+<p>
+    <label for="alias">Формула (азот, фосфор, калий):</label><br>
+    <input type="text" id="alias" name="alias" value="{{ jornal_dung.alias}}"><br>
+</p>
+<p>
+    <label for="quantity">Количество в граммах (миллилитрах):</label><br>
+    <input type="number" id="quantity" name="quantity" value="{{ jornal_dung.quantity }}" min="0" required>
+</p>
+    <input type="submit" value="Submit">
+</form>
+</article>
+
+{% endblock %}
+
+
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

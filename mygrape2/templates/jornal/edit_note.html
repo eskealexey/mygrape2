@@ -1,0 +1,25 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+<section>
+    Посадочное место: {{ note.locationid.name }}
+    <hr>
+    <form method="post" action="" enctype="multipart/form-data">
+     {% csrf_token %}
+        {{ form.title_note.label_tag }} {{ form.title_note }} <br>
+        {{ form.description.label_tag }} {{ form.description }}<br>
+        {{ form.date_add.label_tag }} {{ form.date_add }}<br>
+     <p>
+       <button type="submit">Сохранить</button>
+     </p>
+
+   </form>
+
+</section>
+</article>
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+
+<h4>Посадочные места винограда</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>№ п/п</th>
+        <th>Название</th>
+        <th>Дата посадки</th>
+        <th colspan="2">Место расположения</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for res in result %}
+    {{ res|safe}}
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

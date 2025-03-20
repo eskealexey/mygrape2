@@ -1,0 +1,149 @@
+{% extends 'index_template.html' %}
+{% load static %}
+{% block content %}
+    <span style="font-size: 22px; font-weight: bold">Посадочное место: <span style="color:green;">{{ place.name}}</span></span>
+    <a href="{% url 'delete' place.id %}"><img src="{% static 'img/Recycle.ico' %}" width="20px" height="auto" title="Удалить посадочное место"></a>
+<table class="table">
+    <tr style="vertical-align: top;">
+        <td width="30%">
+           Сорт(а):
+            {% if sort %}
+                {% for s in sort %}
+                <span style="color:green; font-style:italic; font-size:12px;">{{ s.name }};</span>
+                {% endfor %}
+            <br>
+            {% else %}
+                <span style="color:green; font-style:italic; font-size:12px;">{{ sort_ }};</span>
+            <br>
+            {% endif %}
+
+            Дата посадки: <span style="color:green; font-style:italic; font-size:12px;">{{ place.date_posadki }}</span><br>
+            Возраст: <span style="color:green; font-style:italic; font-size:12px;">{{ age }}</span>
+            <hr>
+            Последние операции<br>
+            <span style="color:green; font-style:italic;">Зеленые: {{ last_oper|safe }}<br></span>
+            <span style="color:gold; font-style:italic;">Подкормка: {{ last_feed|safe }}<br></span>
+            <span style="color:#E6855F; font-style:italic;">Обработка: {{ last_proc|safe }}<br></span>
+        </td>
+        <td width="50%">
+            <h5><a href="/jornal/notes/add/{{ place.id }}"><img src="/static/img/add.jpg" width="20px" height="auto" title="Добавить"></a> Дневник: </h5>
+            <div style="font-size: 12px;">
+    {%for note in page_obj %}
+                <a href="{% url 'show_note' note.id %}" title="Просмотреть запись">{{ note.date_add }}</a> - {{note.title_note }}
+                <a href="{% url 'edit_note' note.id %}"><img src="/static/img/edit.png" width="20px" height="auto" title="Редактировать"></a>
+                <br>
+    {% endfor %}
+                <hr>
+               <div class="pagination">
+    {% if page_obj.has_other_pages %}
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&pag={{ pag }}">&lt;&lt;</a>
+        {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <b>{{ i }}</b>
+            {% else %}
+                <a href="?page={{ i }}&pag={{ pag }}">{{ i }}</a>
+            {% endif%}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+           <a href="?page={{ page_obj.next_page_number }}&pag={{ pag }}">&gt;&gt;</a>
+        {% endif %}
+    {% endif %}
+                </div>
+
+            </div>
+        </td>
+        <td width="20%">
+            <img src="/files/{{ place.mesto_graf }}" width="200px" height="200px">
+        </td>
+    </tr>
+</table>
+<hr style="border: 2px solid black;">
+    <div class="row">
+        <div class="col-md-4">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="2"> Таблица <a href="{% url 'show_greenoper' place.id %}">ЗЕЛЕНЫЕ ОПЕРАЦИИ</a></th>
+            </tr>
+            <tr>
+                <th width="15%">Дата</th>
+                <th width="auto">Описание</th>
+            </tr>
+        {% for gr in greens %}
+            <tr style="font-size: 10px; font-weight: bold;">
+            <td>{{ gr.date_add|date:'d.m.Y'}}</td>
+            <td>{{ gr.description|safe }}</td>
+            </tr>
+
+        {% endfor %}
+
+        </table>
+        </div>
+        <div class="col-md-4">
+        <table class="table table-bordered table-striped">
+            <tr class="bg-danger">
+                <th colspan="3"> Таблица <a href="{% url 'show_feeding' place.id %}">ПОДКОРМКИ</a></th>
+            </tr>
+            <tr>
+                <th>Дата</th>
+                <th>Препарат</th>
+                <th>Описание</th>
+            </tr>
+            {% for feed in feeds %}
+            <tr style="font-size: 10px; font-weight: bold;">
+                <td>{{ feed.date_add|date:'d.m.Y' }}</td>
+                <td>
+                {% if feed.dung_id %}
+                    {% for dung in feed.dung_id.all %}
+                    {{ dung.name}};<br>
+                    {% endfor %}
+                {% endif %}
+                {% if feed.dung %}
+                    {{ feed.dung }}
+                {% endif %}
+                </td>
+                <td>{{ feed.description|safe }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+            </div>
+        <div class="col-md-4">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="3"> Таблица <a href="{% url 'show_processing' place.id %}">ОБРАБОТКИ</a></th>
+            </tr>
+            <tr>
+                <th>Дата</th>
+                <th>Препарат</th>
+                <th>Описание</th>
+            </tr>
+
+             {% for proc in proces %}
+            <tr style="font-size: 10px; font-weight: bold;">
+                <td>{{ proc.date_add|date:'d.m.Y' }}</td>
+                <td>
+                    {% if proc.preparat_id %}
+                        {% for prep in proc.preparat_id.all %}
+                        {{ prep.name}};<br>
+                        {% endfor %}
+                    {% endif %}
+                    {% if proc.preparat %}
+                        {{ proc.preparat }}
+                    {% endif %}
+                </td>
+                <td>{{ proc.description|safe }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+            </div>
+    </div>
+<hr>
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}

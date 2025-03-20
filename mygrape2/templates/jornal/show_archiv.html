@@ -1,0 +1,31 @@
+{% extends 'index_template.html' %}
+
+{% block content %}
+<article class="main">
+<h4>Архив посадочных мест винограда (удаленные)</h4>
+<table id="table">
+    <thead>
+    <tr>
+        <th width="5%"></th>
+        <th width="15%">Название</th>
+        <th width="15%">Дата удаления</th>
+        <th width="auto">Причина удаления</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for place in places%}
+    <tr>
+        <td><a href="{% url 'undo_archiv' place.id %}"><img src="/static/img/undo.jpg" width="20px" height="auto" title="Восстановить"></a></td>
+        <td>{{ place.name }}</td>
+        <td>{{ place.date_delete}}</td>
+        <td>{{ place.prichina|safe}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</article>
+{% endblock %}
+
+{% block left %}
+{% include 'jornal/left.html' %}
+{% endblock %}
