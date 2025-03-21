@@ -2,31 +2,32 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
 from .models import SortGrape, InfoGrape
+from django.core.paginator import EmptyPage, PageNotAnInteger
 
 
 def sort_all(request):
-    SELECT_CHOUIS = ['5', '10', '15', '20', '25', ]
+    """
+    Список сортов
+    """
     sorts = SortGrape.objects.all().order_by('name')
-    if request.GET.get('pag') is None:
-        pag = 5
-    else:
-        pag = request.GET.get('pag')
-    if request.method == 'POST':
-        select = request.POST.get('select')
-        if select is None:
-            pag = 5
-        else:
-            pag = select
-    paginator = Paginator(sorts, pag)
+    paginator = Paginator(sorts, 15)
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        # Если страница не является целым числом, вернуть первую страницу
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # Если страница выходит за пределы диапазона, вернуть последнюю страницу
+        page_obj = paginator.page(paginator.num_pages)
+
     context = {
         'title': 'Список сортов',
         'page_obj': page_obj,
-        'select_chouis': SELECT_CHOUIS,
-        'pag': pag,
     }
     return render(request, 'spravgrape/grape_list.html', context=context)
+
 
 def sort_detail(request, sort_id):
     sort = SortGrape.objects.get(id=sort_id)
@@ -53,6 +54,8 @@ def found(request):
     }
 
     if request.method == "GET":
+        if not request.GET.get('find'):
+            return redirect('sort_all')
         str_ = request.GET.get('find', '').strip()  # Получаем значение и убираем пробелы
         if str_:
             # Ищем по названию

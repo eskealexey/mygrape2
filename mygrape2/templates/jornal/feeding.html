@@ -38,8 +38,8 @@
                {{ g.description|safe}}
             </td>
             <td>
-               <a href="{% url 'edit_feeding' g.id %}"><img src="/static/app/img/edit.png" width="20px" height="auto" title="Редактировать"></a>
-               <a href="{% url 'delete_feeding' g.id %}"><img src="/static/app/img/Recycle.ico" width="20px" height="auto" title="Удалить"></a>
+               <a href="{% url 'edit_feeding' g.id %}"><img src="/static/img/edit.png" width="20px" height="auto" title="Редактировать"></a>
+               <a href="{% url 'delete_feeding' g.id %}"><img src="/static/img/Recycle.ico" width="20px" height="auto" title="Удалить"></a>
             </td>
          </tr>
       {% endfor %}

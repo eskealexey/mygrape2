@@ -2,20 +2,26 @@
 
 {% block content %}
 <article class="main">
-     <h3>{{ title }}</h3>
-  <div>
-      {{ form.media }}
-    {{ info.article|safe }}
-
-  </div>
-<p></p>
-     <p align="center"><input type="button" onclick="history.back();" value="Вернуться на предыдущию страницу"/></p>
+    <h3>{{ title }}</h3>
+    <div>
+        {{ form.media }}
+        {{ info.article|safe }}
+    </div>
+    <p></p>
+    <p align="center"><input type="button" onclick="history.back();" value="Назад"/></p>
 </article>
 {% endblock %}
 
-
-
 {% block left %}
 {% include 'main/enter.html' %}
-
 {% endblock %}
+
+<style>
+    @media (max-width: 768px) {
+        .main {
+            width: 100%;
+        }
+    }
+</style>
+
+
