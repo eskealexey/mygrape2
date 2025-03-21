@@ -181,3 +181,71 @@ div#tab_right {
     padding: 1px;
     background-color: #E6855F;
 }
+
+
+#scrollToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    align-items: center;     /* Вертикальное выравнивание */
+    justify-content: center; /* Горизонтальное выравнивание */
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: none;
+    }
+
+#scrollToTop svg {
+    width: 100%;        /* Размер иконки относительно кнопки */
+    height: 100%;
+    display: block;    /* Убираем лишние отступы */
+}
+
+/* Опционально: анимация при наведении */
+#scrollToTop:hover svg {
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
+}
+
+
+/* Основные стили для таблицы */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+
+    /* Адаптивность для маленьких экранов */
+    @media (max-width: 768px) {
+        .table-responsive {
+            overflow-x: auto; /* Горизонтальная прокрутка */
+            display: block;
+            width: 100%;
+        }
+
+        .table th, .table td {
+            white-space: nowrap; /* Запрет переноса текста */
+        }
+
+        .table td {
+            font-size: 14px; /* Уменьшение размера шрифта */
+        }
+
+        .table td a {
+            font-size: 14px; /* Уменьшение размера шрифта для ссылок */
+        }
+
+        .table img {
+            max-width: 80px; /* Уменьшение размера изображений */
+            height: auto;
+        }
+    }

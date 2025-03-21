@@ -1,12 +1,12 @@
 {% extends 'index_template.html' %}
-
+{% load static %}
 {% block content %}
 <article class="main">
 <section>
     Посадочное место: <a href="{% url 'show_place' note.locationid.id %}">{{ note.locationid.name }}</a>
     <hr>
     <h3>{{ note.title_note }}<a href="{% url 'edit_note' note.id %}">
-        <img src="/static/img/edit.png" width="20px" height="auto" title="Редактировать"></a></h3>
+        <img src="{% static 'img/edit.png' %}" width="20px" height="auto" title="Редактировать"></a></h3>
     <p><span style="color:green; font-size: 12px; font-style: italic;">Дата</span>:
         <span style="color:blue; font-size: 12px; font-weight: bold; font-style: italic;">{{ note.date_add}}</span></p>
     <p>{{ note.description|safe}}</p>

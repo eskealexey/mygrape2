@@ -1,59 +1,72 @@
 {% extends 'index_template.html' %}
 
 {% block content %}
-
 <h4>Посадочные места винограда</h4>
 
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>№ п/п</th>
-        <th>Название</th>
-        <th>Дата посадки</th>
-        <th colspan="2">Место расположения</th>
-        <th>Действие</th>
-    </tr>
-    </thead>
-    {% for item in data %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>
-            <a href="{% url 'show_place' item.id %}">
-                <span style="color:blue; font-size:24px; font-weight:bold; font-style:italic;">{{ item.name }}</span>
-            </a>
-            <a href="{% url 'edit' item.id %}">
-                <img src="/static/img/edit.png" width="20px" height="auto" title="Редактировать">
-            </a><br>
-            <span style="color:red; font-size:12px;">Сорта: </span>
-            {% if item.sort_id.all %}
-                {% for sort in item.sort_id.all %}
-                    <a href="{% url 'sort_detail' sort.id %}">
-                        <span style="color:green; font-size:12px;">{{ sort.name }}; </span>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>№ п/п</th>
+                <th>Название</th>
+                <th>Дата посадки</th>
+                <th colspan="2">Место расположения</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a href="{% url 'show_place' item.id %}">
+                        <span style="color:blue; font-size:24px; font-weight:bold; font-style:italic;">{{ item.name }}</span>
                     </a>
-                {% endfor %}
-            {% else %}
-                <span style="color:green; font-size:12px;">{{ item.sort }} </span>
-            {% endif %}
-        </td>
-        <td>
-            {{ item.date_posadki|date:"d M Y" }} г.<br>
-            <span style="color:grey; font-size:10px;">Возраст: {{ item.date_posadki|timesince }}</span>
-        </td>
-        <td><img src="/files/{{ item.mesto_graf }}" width="100px" height="auto" alt=" "></td>
-        <td>{{ item.mesto }}</td>
-        <td>
-            <i>
-                <a href="{% url 'show_greenoper' item.id %}">Зеленые операции</a><br>
-                <a href="{% url 'show_feeding' item.id %}">Подкормки</a><br>
-                <a href="{% url 'show_processing' item.id %}">Обработки</a>
-            </i>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+                    <a href="{% url 'edit' item.id %}">
+                        <img src="/static/img/edit.png" width="20px" height="auto" title="Редактировать">
+                    </a><br>
+                    <span style="color:red; font-size:12px;">Сорта: </span>
+                    {% if item.sort_id.all %}
+                        {% for sort in item.sort_id.all %}
+                            <a href="{% url 'sort_detail' sort.id %}">
+                                <span style="color:green; font-size:12px;">{{ sort.name }}; </span>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <span style="color:green; font-size:12px;">{{ item.sort }} </span>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ item.date_posadki|date:"d M Y" }} г.<br>
+                    <span style="color:grey; font-size:10px;">Возраст: {{ item.date_posadki|timesince }}</span>
+                </td>
+                <td><img src="/files/{{ item.mesto_graf }}" width="100px" height="auto" alt=" "></td>
+                <td>{{ item.mesto }}</td>
+                <td>
+                    <i>
+                        <a href="{% url 'show_greenoper' item.id %}">Зеленые операции</a><br>
+                        <a href="{% url 'show_feeding' item.id %}">Подкормки</a><br>
+                        <a href="{% url 'show_processing' item.id %}">Обработки</a>
+                    </i>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}
 
 {% block left %}
 {% include 'jornal/left.html' %}
 {% endblock %}
+
+<style>
+    @media (max-width: 768px) {
+        .table {
+            width: 100%;
+        }
+    }
+</style>
+
+

@@ -1,44 +1,48 @@
-
 <hr>
-  <p><a href="/jornal/add_place">Добавить место</a></p>
+<p><a href="/jornal/add_place">Добавить место</a></p>
 <hr>
 
 <div class="card" style="width: auto;">
   <div class="card-body">
-<!--    <h6 class="card-title">Массовые операции:</h6>-->
     <p class="card-text">Массовые операции:</p>
-
-
     <ul class="nav flex-column">
-  <li class="nav-item ">
-    <a class="nav-link active" aria-current="page" href="/jornal/mas/greenoper">Зеленые</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'mas_feeding' %}"> Подкормки</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'mas_proces' %}"> Обработки</a>
-  </li>
-
-</ul>
+      <li class="nav-item">
+        <a class="btn btn-sm btn-success w-100 mb-2" href="{% url 'mas_greenoper' %}">Зеленые</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-sm btn-secondary w-100 mb-2" href="{% url 'mas_feeding' %}">Подкормки</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-sm btn-danger w-100 mb-2" href="{% url 'mas_proces' %}">Обработки</a>
+      </li>
+    </ul>
   </div>
 </div>
 <br>
 <div class="card" style="width: auto;">
   <div class="card-body">
     <p class="card-text">Учет:</p>
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link" href="/record/dung/{{request.user.username}}">удобрений</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/record/preparat/{{request.user.username}}">препаратов</a>
-        </li>
-      </ul>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="btn btn-sm btn-success w-100 mb-2" href="/record/dung/{{request.user.username}}">удобрений</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-sm btn-secondary w-100 mb-2" href="/record/preparat/{{request.user.username}}">препаратов</a>
+      </li>
+    </ul>
   </div>
 </div>
 <hr>
 <div>
   <p><a href="{% url 'show_archiv' %}">Архив</a></p>
 </div>
+
+<style>
+    @media (max-width: 768px) {
+        .card {
+            width: 100%;
+        }
+    }
+</style>
+
 

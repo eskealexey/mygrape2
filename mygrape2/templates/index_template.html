@@ -82,6 +82,34 @@
   </div>
 </main>
 
+    <button id="scrollToTop" class="text-center">
+    <svg viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-width="2"
+              d="M12 6v12m0-12l-5 5m5-5l5 5"/>
+    </svg>
+</button>
+    <script>
+        // Получаем кнопку
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        // Показываем кнопку при прокрутке вниз
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = "block";
+            } else {
+                scrollToTopButton.style.display = "none";
+            }
+        };
+
+        // Функция для прокрутки вверх
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Плавная прокрутка
+            });
+        };
+    </script>
+
 <footer class="container text-white mt-auto py-3 bg-grey text-center">
      E&F &copy; 2024 - 2025
 </footer>
