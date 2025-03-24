@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'mygrape2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'mygrape' ,
-        'USER': 'root',
-        'PASSWORD': 'Passw0rD' ,
+        'NAME': name_db ,
+        'USER': name_user,
+        'PASSWORD': pass_user ,
         'HOST': Host,
     }
 }
