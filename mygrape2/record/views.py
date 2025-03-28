@@ -1,4 +1,5 @@
 # from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
 
@@ -10,6 +11,7 @@ from preparats.models import JornalPreparat, Preparats
 
 
 # Create your views here.
+@login_required
 def jornal_dung_list(request, name):
     us = CustomUser.objects.get(username=name)
     jornal_dung = JornalDung.objects.all().filter(userid=us.id)
@@ -25,6 +27,7 @@ def jornal_dung_list(request, name):
     return render(request, 'record/jornal_dung_list.html', context=context)
 
 
+@login_required
 def accounting_(request: HttpRequest, quantity: int = 0)-> type:
     """Учет удобрений"""
     amount = request.POST['amount']
@@ -38,6 +41,7 @@ def accounting_(request: HttpRequest, quantity: int = 0)-> type:
     return quantity
 
 
+@login_required
 @csrf_protect
 def jornal_dung_add(request, name):
     """Добавление записи"""
@@ -63,6 +67,7 @@ def jornal_dung_add(request, name):
     return render(request, 'record/jornal_dung_add.html', context=context)
 
 
+@login_required
 @csrf_protect
 def jornal_dung_edit(request, name, id):
     """Редактирование записи"""
@@ -90,6 +95,8 @@ def jornal_dung_edit(request, name, id):
     }
     return render(request, 'record/jornal_dung_edit.html', context=context)
 
+
+@login_required
 @csrf_protect
 def jornal_dung_delete(request, name, id):
     """Удаление записи"""

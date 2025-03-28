@@ -1,5 +1,6 @@
 import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
@@ -42,6 +43,7 @@ def format_date(date):
     return date.strftime("%d.%m.%Y")
 
 
+@login_required
 def index_jornal(request):
     """
     Вывод списка посадочных мест
@@ -57,6 +59,7 @@ def index_jornal(request):
         return f"Произошла ошибка: {str(e)}"
 
 
+@login_required
 def add_place(request):
     """
     Добавление посадочного места
@@ -85,6 +88,7 @@ def add_place(request):
     return render(request, 'jornal/add_place.html', context=context)
 
 
+@login_required
 def edit_place(request, id):
     """
     Редактирование посадочного места
@@ -115,6 +119,7 @@ def edit_place(request, id):
         return render(request, 'jornal/edit_place.html', context=context)
 
 
+@login_required
 def show_place(request, id):
     """
     Просмотр посадочного места
@@ -167,6 +172,7 @@ def show_place(request, id):
     return render(request, 'jornal/show_place.html', context=context)
 
 
+@login_required
 def delete_place(request, id):
     """
     Удаление посадочного места
@@ -192,6 +198,7 @@ def delete_place(request, id):
     return render(request, 'jornal/delete_place.html', context=context)
 
 
+@login_required
 def show_archiv(request):
     """
     Просмотр архива удаленных посадочных мест
@@ -204,6 +211,7 @@ def show_archiv(request):
     return render(request, 'jornal/show_archiv.html', context=context)
 
 
+@login_required
 def undo_archiv(request, id):
     """
     Восстановление удаленного посадочного места
@@ -217,30 +225,7 @@ def undo_archiv(request, id):
         return redirect('show_archiv')
 
 
-# def add_note(request, id):
-#     """
-#     Добавление заметки
-#     """
-#     is_admin = request.user.is_staff  # Пример: проверка, является ли пользователь админом
-#     place = Location.objects.filter(pk=id,)
-#     if request.method == 'POST':
-#         form = NoteAddForm(request.POST)
-#         if form.is_valid():
-#             title_note = form.cleaned_data['title_note']
-#             date_add = form.cleaned_data['date_add']
-#             description = form.cleaned_data['description']
-#             form.save()
-#             lpk = Notes.objects.latest('pk').pk
-#             Notes.objects.filter(pk=lpk).update(locationid=id)
-#             return redirect('show_place', id=id)
-#     else:
-#         form = NoteAddForm(is_admin=is_admin)
-#     context = {
-#         "title": "Новая запись",
-#         "form": form,
-#         "place": place[0].name,
-#     }
-#     return render(request, 'jornal/add_note.html', context=context)
+@login_required
 def add_note(request, id):
     """
     Добавление заметки
@@ -268,8 +253,7 @@ def add_note(request, id):
     return render(request, 'jornal/add_note.html', context=context)
 
 
-
-
+@login_required
 def edit_note(request, id):
     """
     Редактирование заметки
@@ -293,6 +277,7 @@ def edit_note(request, id):
         return render(request, 'jornal/edit_note.html', context=context)
 
 
+@login_required
 def show_note(request, id):
     """
     Просмотр заметки
@@ -306,6 +291,7 @@ def show_note(request, id):
     return render(request, 'jornal/show_note.html', context=context)
 
 
+@login_required
 def show_greenoper(request, id):
     """
     Просмотр зеленых операций
@@ -328,7 +314,6 @@ def show_greenoper(request, id):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-
     context = {
         'title': 'Зеленые операции',
         'page_obj': page_obj,
@@ -339,6 +324,7 @@ def show_greenoper(request, id):
     return render(request, 'jornal/greenoper.html', context=context)
 
 
+@login_required
 def add_greenoper(request, id):
     """
     Добавление зеленых операций
@@ -363,6 +349,7 @@ def add_greenoper(request, id):
     return render(request, 'jornal/add_greenoper.html', context=context)
 
 
+@login_required
 def edit_greenoper(request, id):
     """
     Редактирование зеленых операций
@@ -386,6 +373,7 @@ def edit_greenoper(request, id):
         return render(request, 'jornal/edit_greenoper.html', context=context)
 
 
+@login_required
 def delete_greenoper(request, id):
     """
     Удаление зеленых операций
@@ -395,6 +383,7 @@ def delete_greenoper(request, id):
     return redirect('show_greenoper', green_oper.locationid.id)
 
 
+@login_required
 def show_feeding(request, id):
     """
     Просмотр журнала "Подкормки"
@@ -429,6 +418,7 @@ def show_feeding(request, id):
     return render(request, 'jornal/feeding.html', context=context)
 
 
+@login_required
 def add_feeding(request, id):
     """
         Добавление подкормок
@@ -454,6 +444,7 @@ def add_feeding(request, id):
         return render(request, 'jornal/add_feeding.html', context=context)
 
 
+@login_required
 def edit_feeding(request, id):
     """
         Редактирование подкормок
@@ -478,7 +469,7 @@ def edit_feeding(request, id):
     }
     return render(request, 'jornal/edit_feeding.html', context=context)
 
-
+@login_required
 def delete_feeding(request, id):
     """
     Удаление зеленых операций
@@ -488,6 +479,7 @@ def delete_feeding(request, id):
     return redirect('show_feeding', feeds.locationid.id)
 
 
+@login_required
 def show_processing(request, id):
     """
     Просмотр журнала "Обработки"
@@ -521,6 +513,7 @@ def show_processing(request, id):
     return render(request, 'jornal/processing.html', context=context)
 
 
+@login_required
 def add_processing(request, id):
     """
     Добавление обработки
@@ -546,6 +539,7 @@ def add_processing(request, id):
         return render(request, 'jornal/add_processing.html', context=context)
 
 
+@login_required
 def edit_processing(request, id):
     """
     Редактирование обработки
@@ -570,6 +564,7 @@ def edit_processing(request, id):
         return render(request, 'jornal/edit_processing.html', context=context)
 
 
+@login_required
 def delete_processing(request, id):
     """
     Удаление обработки

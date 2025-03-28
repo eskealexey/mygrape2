@@ -1,4 +1,5 @@
 """Views for mas"""
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from dung.models import Dung
@@ -6,6 +7,7 @@ from preparats.models import Preparats
 from .models import Location, GreenOper, Feeding, Processing
 
 
+@login_required
 def mas_greenoper(request):
     """
        Добавление зеленые операции массово
@@ -28,6 +30,7 @@ def mas_greenoper(request):
         return render(request, 'jornal/mas/green.html', context=context)
 
 
+@login_required
 def mas_feeding(request,):
     """
        Добавление подкормок массово
@@ -55,6 +58,7 @@ def mas_feeding(request,):
     return render(request, 'jornal/mas/feed.html', context=context)
 
 
+@login_required
 def mas_processing(request,):
     """
        Добавление обработок массово
